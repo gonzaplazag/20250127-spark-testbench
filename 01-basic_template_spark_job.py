@@ -1,3 +1,11 @@
+# spark-submit \
+#    --executor-memory 1G \
+#    --conf spark.eventLog.enabled=true \
+#    --conf spark.eventLog.dir=/tmp/spark-events \
+#    --name "Testing Spark argssssss" \
+#    test.py \
+#    --name joaco \
+#    --age 42
 
 from pyspark.sql import SparkSession
 import argparse
@@ -21,17 +29,27 @@ if __name__=="__main__":
         spark = (
             SparkSession
             .builder
-            .master("local[1]")
-            .appName("02-app-1743")
+            .appName("Tririrri")
             .getOrCreate()
         )
 
 # Parse the arguments
 args = parse_args()
-print(args)
 
-# load df
-df = spark.read.format('csv').load('./data/basic_csv/basic_file.csv')
+print(args['name'])
+print(args['age'])
+print("#####################################")
+
+# Create a DataFrame
+data = [("Alice", 34), ("Bob", 45), ("Cathy", 29)]
+columns = ["Name", "Age"]
+df = spark.createDataFrame(data, columns)
+
+# Show the DataFrame
+df.show()
+
+# save DataFrame
+df.write.mode('overwrite').save("./data/test_table")
 
 # Stop the SparkSession
 spark.stop()
