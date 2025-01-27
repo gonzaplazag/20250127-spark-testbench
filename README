@@ -1,0 +1,6 @@
+### Basic spark-submit
+
+spark-submit \
+    test.py \
+    --name joaco \
+    --age 42
