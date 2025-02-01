@@ -21,17 +21,22 @@ if __name__=="__main__":
         spark = (
             SparkSession
             .builder
-            .master("local[1]")
-            .appName("02-app-1743")
             .getOrCreate()
         )
+
+configurations = spark.sparkContext.getConf().getAll()
+print("#################################")
+for item in configurations: print(item)
+print("#################################")
 
 # Parse the arguments
 args = parse_args()
 print(args)
 
 # load df
-df = spark.read.format('csv').load('./data/basic_csv/basic_file.csv')
+df = spark.read.format('csv').load('./data/500mb_dataset/dataset.csv')
+
+df.write.mode('overwrite').save('./data/to_save/500mb_dataset/dataset')
 
 # Stop the SparkSession
 spark.stop()

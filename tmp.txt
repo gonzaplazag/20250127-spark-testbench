@@ -1,5 +1,5 @@
 spark-submit \
-   --executor-memory 1G \
+   --driver-memory 1G \
    --conf spark.memory.fraction=0.5 \
    --conf spark.memory.storageFraction=0.1 \
    --conf spark.eventLog.enabled=true \
@@ -12,3 +12,17 @@ spark-submit \
     $SPARK_HOME/sbin/start-history-server.sh
 
     https://spark.apache.org/docs/latest/configuration.html
+
+
+
+spark-submit \
+   --master local[*] \
+   --driver-memory 1G \
+   --conf spark.eventLog.enabled=true \
+   --conf spark.eventLog.dir=/tmp/spark-events \
+   --conf spark.app.name="newName" \
+   test.py \
+   --name joaco \
+   --age 42
+
+   434.4
